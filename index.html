@@ -61,22 +61,12 @@
 
     <div id="signage" class="portrait-container flex flex-col justify-between">
         
-        <!-- HEADER: School Badge & Minimal Title -->
-        <header class="flex items-center space-x-2 border-b-2 border-blue-900/10 pb-2 h-[55px] shrink-0">
-            <div class="bg-[#0f2347] text-white w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm border border-amber-400 shrink-0">
-                上野
-            </div>
-            <div class="overflow-hidden">
-                <h1 class="text-sm font-black tracking-wider text-[#0f2347] leading-tight truncate">大分上野丘高校</h1>
-                <p class="text-[8px] tracking-widest text-slate-500 font-bold leading-none uppercase">Weather Signage</p>
-            </div>
+        <!-- HEADER: Simple Title without School Badge or Name (Highly visible) -->
+        <header class="flex items-center justify-center border-b-2 border-blue-900/10 pb-3 h-[50px] shrink-0">
+            <h1 class="text-2xl font-black tracking-widest text-[#0f2347] flex items-center gap-2">
+                <i class="fa-solid fa-cloud-sun text-blue-600"></i>天気予報
+            </h1>
         </header>
-
-        <!-- DATE & TIME DISPLAY -->
-        <div class="bg-white/60 rounded-xl py-1.5 px-3 border border-white/50 text-center shrink-0 shadow-sm">
-            <div id="live-date" class="text-[11px] font-extrabold text-slate-600 tracking-wide">2026年7月14日 (火)</div>
-            <div id="live-time" class="text-2xl font-black tracking-normal text-[#0f2347] mt-0.5">15:09:00</div>
-        </div>
 
         <!-- ADVISORY/WARNING AREA (Compact single line) -->
         <div id="warning-container" class="flex items-center h-[30px] bg-slate-100/90 px-2.5 py-1 rounded-xl border border-slate-200/50 overflow-hidden shrink-0">
@@ -87,31 +77,31 @@
             </div>
         </div>
 
-        <!-- TODAY'S WEATHER CARD (Highly optimized vertical card) -->
-        <section class="glass-card rounded-2xl p-3.5 flex flex-col justify-between items-center h-[255px] shadow-sm shrink-0">
+        <!-- TODAY'S WEATHER CARD (Enlarged for high readability & impact) -->
+        <section class="glass-card rounded-2xl p-4 flex flex-col justify-between items-center h-[290px] shadow-sm shrink-0">
             <div class="text-center w-full">
                 <span class="px-2.5 py-0.5 bg-blue-50 text-blue-900 border border-blue-200 rounded-full text-[9px] font-black tracking-wider inline-block">
                     大分市（学校上空）
                 </span>
             </div>
 
-            <!-- Dynamic Weather Icon -->
-            <div id="main-weather-bg" class="w-24 h-24 rounded-full flex items-center justify-center shadow-md weather-gradient-sunny border-3 my-1">
-                <i id="main-weather-icon" class="fa-solid fa-sun text-4xl text-amber-500 drop-shadow-sm"></i>
+            <!-- Dynamic Weather Icon (Enlarged) -->
+            <div id="main-weather-bg" class="w-28 h-28 rounded-full flex items-center justify-center shadow-md weather-gradient-sunny border-3 my-1">
+                <i id="main-weather-icon" class="fa-solid fa-sun text-5xl text-amber-500 drop-shadow-sm"></i>
             </div>
 
-            <!-- Temp & Weather Text info -->
+            <!-- Temp & Weather Text info (Enlarged) -->
             <div class="text-center w-full">
-                <div id="main-weather-text" class="text-xl font-black text-[#0f2347] mb-1">晴れ</div>
-                <div class="flex items-center justify-center space-x-3 bg-slate-100/90 px-3 py-1 rounded-lg border border-slate-200 mx-auto max-w-[180px]">
+                <div id="main-weather-text" class="text-2xl font-black text-[#0f2347] mb-1.5">晴れ</div>
+                <div class="flex items-center justify-center space-x-3 bg-slate-100/90 px-3.5 py-1.5 rounded-xl border border-slate-200 mx-auto max-w-[190px]">
                     <div class="flex items-baseline space-x-1">
-                        <span class="text-[9px] font-bold text-slate-500">最高</span>
-                        <span id="main-temp-max" class="text-lg font-black text-rose-500">33°</span>
+                        <span class="text-[10px] font-bold text-slate-500">最高</span>
+                        <span id="main-temp-max" class="text-xl font-black text-rose-500">33°</span>
                     </div>
                     <div class="h-4 w-[1px] bg-slate-300"></div>
                     <div class="flex items-baseline space-x-1">
-                        <span class="text-[9px] font-bold text-slate-500">最低</span>
-                        <span id="main-temp-min" class="text-base font-black text-sky-500">23°</span>
+                        <span class="text-[10px] font-bold text-slate-500">最低</span>
+                        <span id="main-temp-min" class="text-lg font-black text-sky-500">23°</span>
                     </div>
                 </div>
             </div>
@@ -127,14 +117,14 @@
             </div>
         </section>
 
-        <!-- 1-HOUR FORECAST LIST (Super-slim 3 Rows only to fit vertical space perfectly) -->
-        <section class="glass-card rounded-2xl p-3 flex flex-col justify-between h-[250px] shadow-sm overflow-hidden shrink-0">
-            <h2 class="text-xs font-black text-[#0f2347] flex items-center border-b border-slate-200/50 pb-1 shrink-0">
+        <!-- 1-HOUR FORECAST LIST (4 Rows for higher data coverage with big fonts) -->
+        <section class="glass-card rounded-2xl p-3.5 flex flex-col justify-between h-[300px] shadow-sm overflow-hidden shrink-0">
+            <h2 class="text-xs font-black text-[#0f2347] flex items-center border-b border-slate-200/50 pb-1.5 shrink-0">
                 <i class="fa-solid fa-clock text-amber-500 mr-1"></i>これからの天気
             </h2>
             
             <div id="hourly-list-container" class="flex-grow flex flex-col justify-between py-1 gap-1.5 overflow-hidden">
-                <!-- Dynamic rows injected here (3 slots for portrait height safety) -->
+                <!-- Dynamic rows injected here (4 slots for portrait height safety) -->
             </div>
         </section>
 
@@ -159,27 +149,6 @@
 
     <!-- Script for Live Weather, Dynamic Warnings & 1-Hour Step-by-Step Forecast -->
     <script>
-        // 1. Live Clock and Date Updater
-        function updateClock() {
-            const now = new Date();
-            
-            // Format Time
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('live-time').textContent = `${hours}:${minutes}:${seconds}`;
-
-            // Format Date (Japanese Style)
-            const year = now.getFullYear();
-            const month = now.getMonth() + 1;
-            const date = now.getDate();
-            const days = ['日', '月', '火', '水', '木', '金', '土'];
-            const day = days[now.getDay()];
-            document.getElementById('live-date').textContent = `${year}年${month}月${date}日 (${day})`;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
         // Warning Code to Japanese text Map (JMA standard warning codes)
         const warningCodeMap = {
             "02": "暴風雪警報", "03": "大雨警報", "04": "洪水警報", "05": "暴風警報",
@@ -317,7 +286,7 @@
                 badge.className = "px-2 py-0.5 bg-rose-500 text-white border border-rose-600 rounded-md text-[9px] font-black tracking-wider animate-pulse flex items-center gap-0.5 truncate max-w-[170px]";
                 badge.innerHTML = `<i class="fa-solid fa-circle-exclamation shrink-0"></i>${name}`;
             } else {
-                badge.className = "px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded-md text-[9px] font-extrabold flex items-center gap-0.5 truncate max-w-[170px]";
+                badge.className = "px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 truncate max-w-[170px]";
                 badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation shrink-0"></i>${name}`;
             }
             container.appendChild(badge);
@@ -339,16 +308,16 @@
             let cleanText = "晴れ";
             if (text.includes("雨")) {
                 cleanText = "雨";
-                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-md weather-gradient-rainy border-3 my-1";
-                iconElement.className = "fa-solid fa-cloud-showers-heavy text-4xl text-sky-500 drop-shadow-sm";
+                bgElement.className = "w-28 h-28 rounded-full flex items-center justify-center shadow-md weather-gradient-rainy border-3 my-1";
+                iconElement.className = "fa-solid fa-cloud-showers-heavy text-5xl text-sky-500 drop-shadow-sm";
             } else if (text.includes("曇")) {
                 cleanText = "曇り";
-                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-lg weather-gradient-cloudy border-3 my-1";
-                iconElement.className = "fa-solid fa-cloud text-4xl text-slate-500 drop-shadow-sm";
+                bgElement.className = "w-28 h-28 rounded-full flex items-center justify-center shadow-lg weather-gradient-cloudy border-3 my-1";
+                iconElement.className = "fa-solid fa-cloud text-5xl text-slate-500 drop-shadow-sm";
             } else {
                 cleanText = "晴れ";
-                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-lg weather-gradient-sunny border-3 my-1";
-                iconElement.className = "fa-solid fa-sun text-4xl text-amber-500 drop-shadow-sm";
+                bgElement.className = "w-28 h-28 rounded-full flex items-center justify-center shadow-lg weather-gradient-sunny border-3 my-1";
+                iconElement.className = "fa-solid fa-sun text-5xl text-amber-500 drop-shadow-sm";
             }
             
             textElement.textContent = cleanText;
@@ -356,7 +325,7 @@
             document.getElementById('main-temp-min').textContent = `${min}°`;
         }
 
-        // Generate dynamic 1-Hour lists - optimized specifically for the 250px slim row layout
+        // Generate dynamic 1-Hour lists - optimized specifically for the 250px slim row layout (Now showing 4 hours!)
         function generateHourlyForecast(baseWeather, baseTemp) {
             const container = document.getElementById('hourly-list-container');
             container.innerHTML = ""; // Clear placeholders
@@ -364,8 +333,8 @@
             const now = new Date();
             const startHour = now.getHours();
 
-            // Build 3 hours of continuous forecast to fit within the small portrait block
-            for (let i = 1; i <= 3; i++) {
+            // Build 4 hours of continuous forecast to fit within the expanded portrait block
+            for (let i = 1; i <= 4; i++) {
                 const targetHourNum = (startHour + i) % 24;
                 const timeString = `${String(targetHourNum).padStart(2, '0')}:00`;
                 
@@ -373,7 +342,7 @@
 
                 // Create row (pushed tight, small font styles)
                 const row = document.createElement('div');
-                row.className = "flex items-center justify-between bg-white/95 py-2 px-3 rounded-xl border border-slate-100 shadow-sm transition-all hover:translate-x-0.5 duration-300";
+                row.className = "flex items-center justify-between bg-white/95 py-2.5 px-3 rounded-xl border border-slate-100 shadow-sm transition-all hover:translate-x-0.5 duration-300";
                 
                 const isNight = targetHourNum >= 19 || targetHourNum < 6;
                 const timeColorClass = isNight ? "text-indigo-950 font-black" : "text-slate-800 font-black";
