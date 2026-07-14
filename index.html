@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大分上野丘高校 デジタルサイネージ天気予報</title>
+    <title>大分上野丘高校 デジタルサイネージ天気予報 (縦長250x850)</title>
     <!-- Tailwind CSS for layout & clean modern components -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome icons for weather indicators -->
@@ -18,185 +18,140 @@
             /* Bright, active, school-appropriate sky morning gradient */
             background: linear-gradient(135deg, #e0f2fe 0%, #eff6ff 50%, #f0fdf4 100%);
             overflow: hidden;
-            width: 1920px;
-            height: 1080px;
-            color: #0f172a; /* Slate 900 for high readability on bright bg */
+            width: 250px;
+            height: 850px;
+            color: #0f172a; /* Slate 900 */
         }
-        /* 16:9 aspect ratio enforcement scale container with custom safe paddings */
-        .signage-container {
-            width: 1920px;
-            height: 1080px;
+        /* Strict 250x850 portrait container with autoscale helper */
+        .portrait-container {
+            width: 250px;
+            height: 850px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             transform-origin: center center;
             box-sizing: border-box;
-            
-            /* 【重要】実機のL字型システム枠（右側：約375px、下部：約235px）を避けるセーフエリア調整 */
-            padding-top: 40px;
-            padding-left: 45px;
-            padding-right: 420px;  /* 右側の熱中症予報に重ならないための安全マージン */
-            padding-bottom: 275px; /* 下部の時計・広報テロップに重ならないための安全マージン */
+            padding: 14px;
         }
         /* Glassmorphism soft panels */
         .glass-card {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 2px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.1);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.08);
         }
         /* Active weather gradients (Bright and vibrant) */
         .weather-gradient-sunny {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%);
-            border: 2px solid #ffedd5;
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 1.5px solid #ffedd5;
         }
         .weather-gradient-cloudy {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-            border: 2px solid #f1f5f9;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1.5px solid #f1f5f9;
         }
         .weather-gradient-rainy {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
-            border: 2px solid #e0f2fe;
+            background: linear-gradient(135deg, #f0f9ff 0%, #bae6fd 100%);
+            border: 1.5px solid #e0f2fe;
         }
     </style>
 </head>
 <body>
 
-    <div id="signage" class="signage-container flex flex-col justify-between text-slate-900">
+    <div id="signage" class="portrait-container flex flex-col justify-between">
         
-        <!-- HEADER: School Identity & Live Time (Enforced height for safety) -->
-        <header class="flex justify-between items-center border-b-4 border-blue-900/10 pb-4 h-[100px] shrink-0">
-            <div class="flex items-center space-x-6">
-                <!-- School Shield Icon -->
-                <div class="bg-[#0f2347] text-white w-16 h-16 rounded-2xl flex items-center justify-center font-black text-2xl shadow-md border-3 border-amber-400 shrink-0">
-                    天気
-                </div>
-                <div>
-                    <h1 class="text-4xl font-black tracking-wider text-[#0f2347]">天気予報</h1>
-                    <p class="text-base tracking-widest text-slate-500 font-bold mt-0.5">OITA UENOGAOKA HIGH SCHOOL • WEATHER FORECAST</p>
-                </div>
+        <!-- HEADER: School Badge & Minimal Title -->
+        <header class="flex items-center space-x-2 border-b-2 border-blue-900/10 pb-2 h-[55px] shrink-0">
+            <div class="bg-[#0f2347] text-white w-9 h-9 rounded-lg flex items-center justify-center font-black text-xs shadow-sm border border-amber-400 shrink-0">
+                上野
             </div>
-            
-            <!-- Real-time Clock and Date (Inside Safe Area width) -->
-            <div class="text-right flex items-center space-x-6">
-                <div class="border-l-4 border-[#0f2347] pl-5 py-1">
-                    <div id="live-date" class="text-2xl font-extrabold text-slate-600 tracking-wide">2026年7月14日 (火)</div>
-                    <div id="live-time" class="text-5xl font-black tracking-normal text-[#0f2347] mt-0.5">15:09:00</div>
-                </div>
+            <div class="overflow-hidden">
+                <h1 class="text-sm font-black tracking-wider text-[#0f2347] leading-tight truncate">大分上野丘高校</h1>
+                <p class="text-[8px] tracking-widest text-slate-500 font-bold leading-none uppercase">Weather Signage</p>
             </div>
         </header>
 
-        <!-- MAIN CONTENT AREA: Optimized for Safe Inner Dimensions (725px - 100px = 625px approx height) -->
-        <main class="grid grid-cols-12 gap-6 my-4 flex-grow items-stretch">
-            
-            <!-- LEFT SECTION: Today's Summary Weather, Warnings & Overview (Col-5) -->
-            <section class="col-span-5 glass-card rounded-[32px] p-6 flex flex-col justify-between shadow-xl overflow-hidden">
-                <!-- Weather Info Header -->
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="px-4 py-1 bg-blue-100 text-blue-900 border-2 border-blue-200 rounded-full text-sm font-extrabold tracking-wider">
-                            <i class="fa-solid fa-location-dot mr-1"></i> 大分市（学校上空）
-                        </span>
-                        <span class="text-xs text-slate-500 font-bold">1時間更新</span>
-                    </div>
-                    
-                    <!-- Quiet & Gentle Advisory/Warning Indicator (Height safety margin) -->
-                    <div id="warning-container" class="flex items-center min-h-[38px] max-h-[40px] bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200/50 overflow-hidden">
-                        <span class="text-xs font-bold text-slate-500 mr-1 shrink-0 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1"></i>防災：</span>
-                        <div id="warning-badges" class="flex flex-wrap gap-1.5 overflow-hidden max-h-[30px]">
-                            <!-- Dynamic Content -->
-                            <span class="text-xs font-extrabold text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i>現在、警報・注意報はありません</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- DATE & TIME DISPLAY -->
+        <div class="bg-white/60 rounded-xl py-1.5 px-3 border border-white/50 text-center shrink-0 shadow-sm">
+            <div id="live-date" class="text-[11px] font-extrabold text-slate-600 tracking-wide">2026年7月14日 (火)</div>
+            <div id="live-time" class="text-2xl font-black tracking-normal text-[#0f2347] mt-0.5">15:09:00</div>
+        </div>
 
-                <!-- Weather Graphic & Temperature Info -->
-                <div class="flex flex-col items-center justify-center py-1 space-y-2">
-                    <!-- Dynamic Weather Icon (Optimized circle height to fit safe box) -->
-                    <div id="main-weather-bg" class="w-40 h-40 rounded-full flex items-center justify-center shadow-md weather-gradient-sunny border-3">
-                        <i id="main-weather-icon" class="fa-solid fa-sun text-6xl text-amber-500 drop-shadow-sm"></i>
-                    </div>
+        <!-- ADVISORY/WARNING AREA (Compact single line) -->
+        <div id="warning-container" class="flex items-center h-[30px] bg-slate-100/90 px-2.5 py-1 rounded-xl border border-slate-200/50 overflow-hidden shrink-0">
+            <span class="text-[9px] font-black text-slate-500 mr-1 shrink-0"><i class="fa-solid fa-triangle-exclamation"></i> 防災:</span>
+            <div id="warning-badges" class="flex items-center overflow-hidden w-full">
+                <!-- Dynamic Warning Content -->
+                <span class="text-[9px] font-black text-emerald-600 truncate"><i class="fa-solid fa-circle-check mr-0.5"></i>発表なし</span>
+            </div>
+        </div>
 
-                    <div class="text-center w-full">
-                        <div id="main-weather-text" class="text-4xl font-black text-[#0f2347] tracking-widest mb-1.5">晴れ</div>
-                        <div class="flex items-center justify-center space-x-6 bg-slate-100/90 px-6 py-2 rounded-xl border border-slate-200 mx-auto max-w-[320px]">
-                            <div class="flex items-baseline space-x-1.5">
-                                <span class="text-xs font-bold text-slate-500">最高</span>
-                                <span id="main-temp-max" class="text-4xl font-black text-rose-500">33°C</span>
-                            </div>
-                            <div class="h-6 w-[2px] bg-slate-300"></div>
-                            <div class="flex items-baseline space-x-1.5">
-                                <span class="text-xs font-bold text-slate-500">最低</span>
-                                <span id="main-temp-min" class="text-3xl font-black text-sky-500">23°C</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Extra Weather Indicators (Humidity, Rain, Wind - Compact but readable) -->
-                <div class="grid grid-cols-3 gap-2 bg-white/95 p-2.5 rounded-xl border border-slate-200 shadow-sm shrink-0">
-                    <div class="text-center border-r border-slate-200">
-                        <div class="text-xs text-slate-500 font-bold mb-0.5"><i class="fa-solid fa-umbrella text-blue-500 mr-1"></i>降水</div>
-                        <div id="main-rain" class="text-xl font-black text-slate-800">10%</div>
-                    </div>
-                    <div class="text-center border-r border-slate-200">
-                        <div class="text-xs text-slate-500 font-bold mb-0.5"><i class="fa-solid fa-droplet text-teal-500 mr-1"></i>湿度</div>
-                        <div id="main-humidity" class="text-xl font-black text-slate-800">74%</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-xs text-slate-500 font-bold mb-0.5"><i class="fa-solid fa-wind text-emerald-500 mr-1"></i>風速</div>
-                        <div id="main-wind" class="text-xl font-black text-slate-800">2.4m/s</div>
-                    </div>
-                </div>
-
-                <!-- Weather Overview Text Area (Height restricted to prevent bottom overflows) -->
-                <div class="p-2.5 bg-sky-50/70 border border-sky-100/80 rounded-xl shrink-0">
-                    <div class="text-xs font-black text-[#0f2347] mb-1 flex items-center">
-                        <i class="fa-solid fa-file-text text-sky-600 mr-1.5 text-sm"></i>大分県の天気概況
-                    </div>
-                    <p id="overview-text" class="text-xs font-bold text-slate-600 leading-relaxed max-h-[54px] overflow-hidden line-clamp-3">
-                        最新の気象庁天気概況を読み込んでいます...
-                    </p>
-                </div>
-            </section>
-
-            <!-- RIGHT SECTION: 1-Hour Step-by-Step Forecast (Col-7 - Adaptive Grid Heights) -->
-            <section class="col-span-7 glass-card rounded-[32px] p-6 flex flex-col justify-between shadow-xl overflow-hidden">
-                <div class="mb-2">
-                    <h2 class="text-3xl font-black text-[#0f2347] flex items-center">
-                        <i class="fa-solid fa-clock text-amber-500 mr-3 text-4xl"></i>1時間ごとの天気予報
-                    </h2>
-                    <p class="text-sm font-bold text-slate-500 mt-1">授業・部活動、下校時間帯の予報です（右側の熱中症予報も併せて確認ください）</p>
-                </div>
-                
-                <!-- Hourly list container (Safe gap and flex properties for perfect alignment) -->
-                <div id="hourly-list-container" class="gap-2 flex-grow flex flex-col justify-between py-1 overflow-hidden">
-                    <!-- Dynamic rows injected here -->
-                </div>
-            </section>
-
-        </main>
-
-        <!-- FOOTER: Clean and visible - Positioned exactly above bottom signage bar -->
-        <footer class="flex justify-between items-center bg-[#0f2347] text-white px-8 py-3.5 h-[65px] rounded-2xl shadow-lg border border-blue-950 shrink-0">
-            <div class="flex items-center space-x-4">
-                <span class="bg-amber-400 text-[#0f2347] font-black text-sm px-4 py-1 rounded-lg shrink-0 tracking-wider flex items-center gap-1.5">
-                    <i class="fa-solid fa-database"></i>情報出典
-                </span>
-                <span class="text-lg font-bold text-blue-100 tracking-wide">
-                    気象庁（JMA）大分市中部エリア天気予報・警報注意報 リアルタイム自動連携中
+        <!-- TODAY'S WEATHER CARD (Highly optimized vertical card) -->
+        <section class="glass-card rounded-2xl p-3.5 flex flex-col justify-between items-center h-[255px] shadow-sm shrink-0">
+            <div class="text-center w-full">
+                <span class="px-2.5 py-0.5 bg-blue-50 text-blue-900 border border-blue-200 rounded-full text-[9px] font-black tracking-wider inline-block">
+                    大分市（学校上空）
                 </span>
             </div>
+
+            <!-- Dynamic Weather Icon -->
+            <div id="main-weather-bg" class="w-24 h-24 rounded-full flex items-center justify-center shadow-md weather-gradient-sunny border-3 my-1">
+                <i id="main-weather-icon" class="fa-solid fa-sun text-4xl text-amber-500 drop-shadow-sm"></i>
+            </div>
+
+            <!-- Temp & Weather Text info -->
+            <div class="text-center w-full">
+                <div id="main-weather-text" class="text-xl font-black text-[#0f2347] mb-1">晴れ</div>
+                <div class="flex items-center justify-center space-x-3 bg-slate-100/90 px-3 py-1 rounded-lg border border-slate-200 mx-auto max-w-[180px]">
+                    <div class="flex items-baseline space-x-1">
+                        <span class="text-[9px] font-bold text-slate-500">最高</span>
+                        <span id="main-temp-max" class="text-lg font-black text-rose-500">33°</span>
+                    </div>
+                    <div class="h-4 w-[1px] bg-slate-300"></div>
+                    <div class="flex items-baseline space-x-1">
+                        <span class="text-[9px] font-bold text-slate-500">最低</span>
+                        <span id="main-temp-min" class="text-base font-black text-sky-500">23°</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rain & Wind Stats -->
+            <div class="grid grid-cols-2 gap-2 w-full pt-1.5 border-t border-slate-200/50 text-center">
+                <div class="text-[10px] font-bold text-slate-600 border-r border-slate-200">
+                    <i class="fa-solid fa-umbrella text-blue-500 mr-0.5"></i>降水 <span id="main-rain" class="font-black text-slate-800 text-xs">10%</span>
+                </div>
+                <div class="text-[10px] font-bold text-slate-600">
+                    <i class="fa-solid fa-droplet text-teal-500 mr-0.5"></i>湿度 <span id="main-humidity" class="font-black text-slate-800 text-xs">74%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1-HOUR FORECAST LIST (Super-slim 3 Rows only to fit vertical space perfectly) -->
+        <section class="glass-card rounded-2xl p-3 flex flex-col justify-between h-[250px] shadow-sm overflow-hidden shrink-0">
+            <h2 class="text-xs font-black text-[#0f2347] flex items-center border-b border-slate-200/50 pb-1 shrink-0">
+                <i class="fa-solid fa-clock text-amber-500 mr-1"></i>これからの天気
+            </h2>
             
-            <!-- Connection & Update Status -->
-            <div class="flex items-center space-x-2 text-sm font-bold text-emerald-300 shrink-0">
-                <span class="relative flex h-3 w-3">
+            <div id="hourly-list-container" class="flex-grow flex flex-col justify-between py-1 gap-1.5 overflow-hidden">
+                <!-- Dynamic rows injected here (3 slots for portrait height safety) -->
+            </div>
+        </section>
+
+        <!-- FOOTER: Info & Live Active Badge (Highly compact) -->
+        <footer class="flex flex-col justify-center items-center bg-[#0f2347] text-white p-2 h-[65px] rounded-xl shadow-md border border-blue-950 shrink-0 text-[9px]">
+            <div class="font-bold text-slate-300 flex items-center gap-1">
+                <i class="fa-solid fa-database text-amber-400"></i> 出典:気象庁(JMA)
+            </div>
+            <div class="text-slate-400 mt-0.5 font-medium truncate text-[8px]">大分市中部エリアデータ自動反映中</div>
+            
+            <!-- Active Indicator -->
+            <div class="flex items-center space-x-1 text-emerald-400 font-bold mt-1 text-[8px]">
+                <span class="relative flex h-1.5 w-1.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-400"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
                 </span>
-                <span class="tracking-widest">LIVE ACTIVE</span>
+                <span class="tracking-widest uppercase">Live Active</span>
             </div>
         </footer>
 
@@ -306,23 +261,7 @@
             }
         }
 
-        // 3. Fetch JMA Text Weather Overview (大分県の概況テキストを取得)
-        async function fetchOitaOverview() {
-            try {
-                const response = await fetch('https://www.jma.go.jp/bosai/forecast/data/overview_forecast/440000.json');
-                if (!response.ok) throw new Error('Overview fetch failed');
-                const data = await response.json();
-                if (data && data.text) {
-                    const formattedText = data.text.replace(/\n\n/g, ' ').replace(/\n/g, ' ');
-                    document.getElementById('overview-text').textContent = formattedText;
-                }
-            } catch (e) {
-                console.error("Overview error: ", e);
-                document.getElementById('overview-text').textContent = "晴れまたは気圧の谷の影響で安定した天気となる見込みです。詳細は気象庁情報をご参照ください。";
-            }
-        }
-
-        // 4. Fetch JMA Warnings/Advisories (大分市の最新警報・注意報を取得)
+        // 3. Fetch JMA Warnings/Advisories (大分市の最新警報・注意報を取得)
         async function fetchOitaWarnings() {
             try {
                 const response = await fetch('https://www.jma.go.jp/bosai/warning/data/warning/440000.json');
@@ -364,24 +303,32 @@
             container.innerHTML = "";
 
             if (!warnings || warnings.length === 0) {
-                container.innerHTML = `<span class="text-xs font-extrabold text-emerald-600 flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i>現在、警報・注意報はありません</span>`;
+                container.innerHTML = `<span class="text-[10px] font-extrabold text-emerald-600 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i>警報・注意報なし</span>`;
                 return;
             }
 
-            warnings.forEach(w => {
-                const name = warningCodeMap[w.code] || w.name || "気象注意報";
-                const isAlarm = name.includes("警報");
-                
-                const badge = document.createElement('span');
-                if (isAlarm) {
-                    badge.className = "px-2.5 py-0.5 bg-rose-500 text-white border border-rose-600 rounded-lg text-[10px] font-black tracking-wider animate-pulse flex items-center gap-0.5 shrink-0";
-                    badge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i>${name}`;
-                } else {
-                    badge.className = "px-2.5 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-[10px] font-extrabold flex items-center gap-0.5 shrink-0";
-                    badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>${name}`;
-                }
-                container.appendChild(badge);
-            });
+            // Display warning badge (Limit to the first one due to narrow width constraint)
+            const w = warnings[0];
+            const name = warningCodeMap[w.code] || w.name || "気象注意報";
+            const isAlarm = name.includes("警報");
+            
+            const badge = document.createElement('span');
+            if (isAlarm) {
+                badge.className = "px-2 py-0.5 bg-rose-500 text-white border border-rose-600 rounded-md text-[9px] font-black tracking-wider animate-pulse flex items-center gap-0.5 truncate max-w-[170px]";
+                badge.innerHTML = `<i class="fa-solid fa-circle-exclamation shrink-0"></i>${name}`;
+            } else {
+                badge.className = "px-2 py-0.5 bg-amber-100 text-amber-800 border border-amber-300 rounded-md text-[9px] font-extrabold flex items-center gap-0.5 truncate max-w-[170px]";
+                badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation shrink-0"></i>${name}`;
+            }
+            container.appendChild(badge);
+
+            // If there are more warnings, append a plus sign count
+            if (warnings.length > 1) {
+                const countBadge = document.createElement('span');
+                countBadge.className = "text-[9px] font-black text-slate-500 ml-1 shrink-0";
+                countBadge.textContent = `他${warnings.length - 1}件`;
+                container.appendChild(countBadge);
+            }
         }
 
         function updateMainWeatherUI(text, max, min) {
@@ -392,24 +339,24 @@
             let cleanText = "晴れ";
             if (text.includes("雨")) {
                 cleanText = "雨";
-                bgElement.className = "w-40 h-40 rounded-full flex items-center justify-center shadow-lg weather-gradient-rainy border-3";
-                iconElement.className = "fa-solid fa-cloud-showers-heavy text-6xl text-sky-500 drop-shadow-sm";
+                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-md weather-gradient-rainy border-3 my-1";
+                iconElement.className = "fa-solid fa-cloud-showers-heavy text-4xl text-sky-500 drop-shadow-sm";
             } else if (text.includes("曇")) {
                 cleanText = "曇り";
-                bgElement.className = "w-40 h-40 rounded-full flex items-center justify-center shadow-lg weather-gradient-cloudy border-3";
-                iconElement.className = "fa-solid fa-cloud text-6xl text-slate-500 drop-shadow-sm";
+                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-lg weather-gradient-cloudy border-3 my-1";
+                iconElement.className = "fa-solid fa-cloud text-4xl text-slate-500 drop-shadow-sm";
             } else {
                 cleanText = "晴れ";
-                bgElement.className = "w-40 h-40 rounded-full flex items-center justify-center shadow-lg weather-gradient-sunny border-3";
-                iconElement.className = "fa-solid fa-sun text-6xl text-amber-500 drop-shadow-sm";
+                bgElement.className = "w-24 h-24 rounded-full flex items-center justify-center shadow-lg weather-gradient-sunny border-3 my-1";
+                iconElement.className = "fa-solid fa-sun text-4xl text-amber-500 drop-shadow-sm";
             }
             
             textElement.textContent = cleanText;
-            document.getElementById('main-temp-max').textContent = `${max}°C`;
-            document.getElementById('main-temp-min').textContent = `${min}°C`;
+            document.getElementById('main-temp-max').textContent = `${max}°`;
+            document.getElementById('main-temp-min').textContent = `${min}°`;
         }
 
-        // Generate precise 1-Hour lists (Perfect layout inside remaining safe inner height)
+        // Generate dynamic 1-Hour lists - optimized specifically for the 250px slim row layout
         function generateHourlyForecast(baseWeather, baseTemp) {
             const container = document.getElementById('hourly-list-container');
             container.innerHTML = ""; // Clear placeholders
@@ -417,36 +364,36 @@
             const now = new Date();
             const startHour = now.getHours();
 
-            // We will build 5 hours of continuous forecast
-            for (let i = 1; i <= 5; i++) {
+            // Build 3 hours of continuous forecast to fit within the small portrait block
+            for (let i = 1; i <= 3; i++) {
                 const targetHourNum = (startHour + i) % 24;
                 const timeString = `${String(targetHourNum).padStart(2, '0')}:00`;
                 
                 const info = getWeatherDetailsByHour(baseWeather, i, baseTemp);
 
-                // Create row - Highly optimized padding (py-2 px-5) to secure 100% fits within 765px area
+                // Create row (pushed tight, small font styles)
                 const row = document.createElement('div');
-                row.className = "flex items-center justify-between bg-white/95 py-2.5 px-5 rounded-2xl border border-slate-100 shadow-sm transition-all hover:translate-x-1 duration-300";
+                row.className = "flex items-center justify-between bg-white/95 py-2 px-3 rounded-xl border border-slate-100 shadow-sm transition-all hover:translate-x-0.5 duration-300";
                 
                 const isNight = targetHourNum >= 19 || targetHourNum < 6;
                 const timeColorClass = isNight ? "text-indigo-950 font-black" : "text-slate-800 font-black";
 
                 row.innerHTML = `
-                    <div class="flex items-center space-x-3 w-36">
-                        <span class="text-2xl ${timeColorClass}">${timeString}</span>
-                        ${isNight ? '<span class="text-[10px] bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-md font-extrabold shrink-0">下校帯</span>' : ''}
+                    <div class="flex flex-col w-[52px]">
+                        <span class="text-base ${timeColorClass} leading-none">${timeString}</span>
+                        ${isNight ? '<span class="text-[7px] text-indigo-500 font-bold leading-none mt-0.5">下校帯</span>' : ''}
                     </div>
-                    <div class="flex items-center space-x-4 w-44">
-                        <i class="${info.iconClass} text-3xl"></i>
-                        <span class="text-lg font-extrabold text-slate-700">${info.weather}</span>
+                    <div class="flex items-center space-x-1.5 w-[75px] overflow-hidden">
+                        <i class="${info.iconClass} text-xl shrink-0"></i>
+                        <span class="text-xs font-extrabold text-slate-700 truncate">${info.weather}</span>
                     </div>
-                    <div class="flex items-baseline space-x-1 w-28 justify-end">
-                        <span class="text-3xl font-black text-slate-800">${info.temp}</span>
-                        <span class="text-sm text-slate-500 font-extrabold">°C</span>
+                    <div class="flex items-baseline w-[36px] justify-end shrink-0">
+                        <span class="text-base font-black text-slate-800">${info.temp}</span>
+                        <span class="text-[9px] text-slate-400 font-bold">°</span>
                     </div>
-                    <div class="flex items-center space-x-1.5 w-24 justify-end text-blue-600 font-black">
-                        <i class="fa-solid fa-umbrella text-xl opacity-85"></i>
-                        <span class="text-xl">${info.rainProb}%</span>
+                    <div class="flex items-center space-x-0.5 w-[36px] justify-end text-blue-600 font-black shrink-0">
+                        <i class="fa-solid fa-umbrella text-[10px] opacity-80"></i>
+                        <span class="text-xs">${info.rainProb}%</span>
                     </div>
                 `;
                 container.appendChild(row);
@@ -456,23 +403,21 @@
         // Run fetch functions initially and periodically
         function initApp() {
             fetchOitaWeather();
-            fetchOitaOverview();
             fetchOitaWarnings();
         }
         initApp();
         
         setInterval(fetchOitaWeather, 30 * 60 * 1000);
-        setInterval(fetchOitaOverview, 30 * 60 * 1000);
         setInterval(fetchOitaWarnings, 15 * 60 * 1000); // Check warnings more frequently
 
-        // 3. Aspect Ratio auto scaling helper for exactly 16:9 layouts on screens
+        // 3. Aspect Ratio auto scaling helper for exactly 250x850 portrait layout on any screen
         function resizeSignage() {
             const container = document.getElementById('signage');
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             
-            const targetWidth = 1920;
-            const targetHeight = 1080;
+            const targetWidth = 250;
+            const targetHeight = 850;
             
             const scaleX = windowWidth / targetWidth;
             const scaleY = windowHeight / targetHeight;
